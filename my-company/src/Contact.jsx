@@ -1,22 +1,28 @@
 import { useState } from 'react';
 
 function Contact() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [message, setMessage] = useState('');
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleSubmit = (e) => { e.preventDefault(); alert('Form submitted!'); }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Message sent: ${message}`);
+    setMessage('');
+  };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Contact Us</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} style={{ display: 'block', margin: '10px 0' }}/>
-        <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} style={{ display: 'block', margin: '10px 0' }}/>
-        <textarea name="message" placeholder="Your Message" value={formData.message} onChange={handleChange} style={{ display: 'block', margin: '10px 0' }}/>
-        <button type="submit">Send Message</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} style={{ padding: '2rem', textAlign: 'center' }}>
+      <input
+        type="text"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Your message"
+        style={{ padding: '0.5rem', marginRight: '1rem', borderRadius: '5px', border: '1px solid #646cff' }}
+      />
+      <button type="submit">Send</button>
+    </form>
   );
 }
 
 export default Contact;
+
+
