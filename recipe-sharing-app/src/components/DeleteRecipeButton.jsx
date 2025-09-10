@@ -3,7 +3,8 @@ import { useRecipeStore } from './recipeStore';
 const DeleteRecipeButton = ({ recipeId }) => {
   const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
 
-  const handleDelete = () => {
+  const handleDelete = (event) => {
+    event.preventDefault(); // optional but safe
     deleteRecipe(recipeId);
   };
 
@@ -11,4 +12,3 @@ const DeleteRecipeButton = ({ recipeId }) => {
 };
 
 export default DeleteRecipeButton;
-

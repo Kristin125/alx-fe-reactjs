@@ -7,8 +7,7 @@ function App() {
   return (
     <Router>
       <nav>
-        <Link to="/">Home</Link>
-        <Link to="/add">Add Recipe</Link>
+        <Link to="/">Home</Link> | <Link to="/add">Add Recipe</Link>
       </nav>
       <Routes>
         <Route path="/" element={<RecipeList />} />
@@ -20,4 +19,3 @@ function App() {
 }
 
 export default App;
-
