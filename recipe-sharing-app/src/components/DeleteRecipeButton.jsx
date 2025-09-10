@@ -1,16 +1,14 @@
 import { useRecipeStore } from './recipeStore';
 
-const DeleteRecipeButton = ({ id, afterDelete }) => {
-  const deleteRecipe = useRecipeStore((s) => s.deleteRecipe);
+const DeleteRecipeButton = ({ recipeId }) => {
+  const deleteRecipe = useRecipeStore((state) => state.deleteRecipe);
 
   const handleDelete = () => {
-    // simple confirmation
-    if (!window.confirm('Are you sure you want to delete this recipe?')) return;
-    deleteRecipe(id);
-    if (typeof afterDelete === 'function') afterDelete();
+    deleteRecipe(recipeId);
   };
 
-  return <button onClick={handleDelete}>Delete</button>;
+  return <button onClick={handleDelete}>Delete Recipe</button>;
 };
 
 export default DeleteRecipeButton;
+
