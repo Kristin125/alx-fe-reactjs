@@ -1,34 +1,42 @@
 import { useState } from 'react';
-import { useRecipeStore } from './recipeStore';
 import { useNavigate } from 'react-router-dom';
+import { useRecipeStore } from './recipeStore';
 
 const AddRecipeForm = () => {
   const addRecipe = useRecipeStore((s) => s.addRecipe);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [ingredients, setIngredients] = useState(''); // comma-separated
+  const [prepTime, setPrepTime] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title.trim() || !description.trim()) return;
 
-    const newRecipe = {
-      id: Date.now().toString(), // string id to match useParams
+    const recipe = {
+      id: Date.now().toString(),
       title: title.trim(),
       description: description.trim(),
+      ingredients: ingredients
+        .split(',')
+        .map((i) => i.trim())
+        .filter(Boolean),
+      prepTime: prepTime ? Number(prepTime) : null,
     };
 
-    addRecipe(newRecipe);
+    addRecipe(recipe);
     setTitle('');
     setDescription('');
+    setIngredients('');
+    setPrepTime('');
 
-    // go to the newly created recipe's detail page
-    navigate(`/recipes/${newRecipe.id}`);
+    navigate(`/recipes/${recipe.id}`);
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
-      <h2>Add New Recipe</h2>
+    <form onSubmit={handleSubmit} style={{ marginBottom: 16 }}>
+      <h2>Add Recipe</h2>
 
       <label>
         Title
@@ -36,7 +44,6 @@ const AddRecipeForm = () => {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Recipe title"
           required
           style={{ display: 'block', width: '100%', marginBottom: 8 }}
         />
@@ -47,8 +54,28 @@ const AddRecipeForm = () => {
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Short description / instructions"
           required
+          style={{ display: 'block', width: '100%', marginBottom: 8 }}
+        />
+      </label>
+
+      <label>
+        Ingredients (comma separated)
+        <input
+          type="text"
+          value={ingredients}
+          onChange={(e) => setIngredients(e.target.value)}
+          placeholder="eg. tomato, basil, garlic"
+          style={{ display: 'block', width: '100%', marginBottom: 8 }}
+        />
+      </label>
+
+      <label>
+        Prep time (minutes)
+        <input
+          type="number"
+          value={prepTime}
+          onChange={(e) => setPrepTime(e.target.value)}
           style={{ display: 'block', width: '100%', marginBottom: 8 }}
         />
       </label>
