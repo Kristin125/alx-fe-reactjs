@@ -1,29 +1,38 @@
-import React, { useEffect } from 'react';
+// src/components/RecipeList.jsx
+import React from 'react';
 import { Link } from 'react-router-dom';
-import useRecipeStore from './recipeStore';
+import { useRecipeStore } from './recipeStore';
 
 const RecipeList = () => {
-  const recipes = useRecipeStore((state) => state.recipes);
-  const filteredRecipes = useRecipeStore((state) => state.filteredRecipes);
-  const filterRecipes = useRecipeStore((state) => state.filterRecipes);
-  const searchTerm = useRecipeStore((state) => state.searchTerm);
+  // show filteredRecipes if they exist else all recipes
+  const filtered = useRecipeStore((s) => s.filteredRecipes);
+  const recipes = useRecipeStore((s) => s.recipes);
+  const display = (filtered && filtered.length) ? filtered : recipes;
 
-  useEffect(() => {
-    filterRecipes();
-  }, [searchTerm, recipes, filterRecipes]);
+  const favorites = useRecipeStore((s) => s.favorites);
+  const addFavorite = useRecipeStore((s) => s.addFavorite);
+  const removeFavorite = useRecipeStore((s) => s.removeFavorite);
 
-  const displayRecipes = searchTerm ? filteredRecipes : recipes;
+  if (!display || display.length === 0) {
+    return <p>No recipes found.</p>;
+  }
 
   return (
     <div>
-      <h2>Recipe List</h2>
-      <ul>
-        {displayRecipes.map((recipe) => (
-          <li key={recipe.id}>
-            <Link to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
-          </li>
-        ))}
-      </ul>
+      <h2>Recipes</h2>
+      {display.map((r) => (
+        <article key={r.id} style={{ border: '1px solid #ddd', padding: 8, marginBottom: 8 }}>
+          <h3><Link to={`/recipes/${r.id}`}>{r.title}</Link></h3>
+          <p>{r.description}</p>
+          <p style={{ fontSize: 12, color: '#555' }}>Ingredients: {Array.isArray(r.ingredients) ? r.ingredients.join(', ') : r.ingredients || '—'}</p>
+          <p style={{ fontSize: 12, color: '#555' }}>Prep: {r.prepTime ?? '—'} min</p>
+          {favorites.includes(r.id) ? (
+            <button onClick={() => removeFavorite(r.id)}>💔 Unfavorite</button>
+          ) : (
+            <button onClick={() => addFavorite(r.id)}>❤️ Favorite</button>
+          )}
+        </article>
+      ))}
     </div>
   );
 };
