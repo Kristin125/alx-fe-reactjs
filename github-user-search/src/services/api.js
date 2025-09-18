@@ -1,10 +1,15 @@
-import axios from "axios";
+import axios from 'axios';
 
-const api = axios.create({
-  baseURL: "https://api.github.com/",
+const BASE_URL = 'https://api.github.com';
+
+export const githubApi = axios.create({
+  baseURL: BASE_URL,
   headers: {
-    Authorization: `token ${import.meta.env.VITE_APP_GITHUB_API_KEY || ""}`,
+    'Accept': 'application/vnd.github.v3+json',
   },
 });
 
-export default api;
+// Example: fetch a user
+export const fetchUser = (username) => {
+  return githubApi.get(`/users/${username}`);
+};
