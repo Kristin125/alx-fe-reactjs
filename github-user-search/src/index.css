@@ -2,7 +2,5 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional: simple default page styles using Tailwind utilities */
-body {
-  @apply bg-gray-50 text-gray-900;
-}
+/* optional defaults */
+body { @apply bg-gray-50 text-gray-900; }
