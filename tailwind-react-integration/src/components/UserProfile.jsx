@@ -6,7 +6,7 @@ function UserProfile() {
       <img
         src="https://via.placeholder.com/150"
         alt="User"
-        className="rounded-full mx-auto w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36"
+        className="rounded-full mx-auto w-20 h-20 sm:w-24 sm:h-24 md:w-36 md:h-36 object-cover"
       />
       <h1 className="text-base sm:text-lg md:text-xl text-blue-800 my-4">
         John Doe
@@ -17,7 +17,5 @@ function UserProfile() {
     </div>
   );
 }
-
-export default UserProfile;
 
 
