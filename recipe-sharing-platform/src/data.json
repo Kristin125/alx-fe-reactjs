@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Carbonara",
+    "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
+    "image": "https://via.placeholder.com/300x200?text=Spaghetti+Carbonara"
+  },
+  {
+    "id": 2,
+    "title": "Chicken Tikka Masala",
+    "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
+    "image": "https://via.placeholder.com/300x200?text=Chicken+Tikka+Masala"
+  },
+  {
+    "id": 3,
+    "title": "Avocado Toast",
+    "summary": "A healthy and simple breakfast with mashed avocado on toast, seasoned with salt and pepper.",
+    "image": "https://via.placeholder.com/300x200?text=Avocado+Toast"
+  }
+]
