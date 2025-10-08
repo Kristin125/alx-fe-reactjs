@@ -1,6 +1,5 @@
-import React from "react";
+import React from "react"; // <- add this
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom";
 import TodoList from "../components/TodoList";
 
 describe("TodoList Component", () => {
@@ -15,10 +14,10 @@ describe("TodoList Component", () => {
     const input = screen.getByPlaceholderText("Add todo");
     const addButton = screen.getByText("Add");
 
-    fireEvent.change(input, { target: { value: "Test new todo" } });
+    fireEvent.change(input, { target: { value: "New Task" } });
     fireEvent.click(addButton);
 
-    expect(screen.getByText("Test new todo")).toBeInTheDocument();
+    expect(screen.getByText("New Task")).toBeInTheDocument();
   });
 
   test("toggles a todo’s completed status", () => {
@@ -37,8 +36,8 @@ describe("TodoList Component", () => {
     const deleteButton = screen.getAllByText("Delete")[0];
     fireEvent.click(deleteButton);
 
-    await waitFor(() => {
-      expect(screen.queryByText("Learn React")).not.toBeInTheDocument();
-    });
+    await waitFor(() =>
+      expect(screen.queryByText("Learn React")).not.toBeInTheDocument()
+    );
   });
 });

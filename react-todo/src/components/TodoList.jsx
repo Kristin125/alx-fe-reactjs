@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function TodoList() {
+const TodoList = () => {
   const [todos, setTodos] = useState([
     { id: 1, text: "Learn React", completed: false },
     { id: 2, text: "Build a Todo App", completed: false },
@@ -8,10 +8,9 @@ function TodoList() {
   const [newTodo, setNewTodo] = useState("");
 
   const addTodo = () => {
-    if (newTodo.trim()) {
-      setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
-      setNewTodo("");
-    }
+    if (newTodo.trim() === "") return;
+    setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
+    setNewTodo("");
   };
 
   const toggleTodo = (id) => {
@@ -23,7 +22,7 @@ function TodoList() {
   };
 
   const deleteTodo = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+    setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   return (
@@ -36,7 +35,6 @@ function TodoList() {
         onChange={(e) => setNewTodo(e.target.value)}
       />
       <button onClick={addTodo}>Add</button>
-
       <ul>
         {todos.map((todo) => (
           <li
@@ -48,12 +46,7 @@ function TodoList() {
             }}
           >
             {todo.text}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteTodo(todo.id);
-              }}
-            >
+            <button onClick={(e) => { e.stopPropagation(); deleteTodo(todo.id); }}>
               Delete
             </button>
           </li>
@@ -61,6 +54,6 @@ function TodoList() {
       </ul>
     </div>
   );
-}
+};
 
 export default TodoList;
