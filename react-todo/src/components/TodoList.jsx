@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AddTodoForm from "./AddTodoForm";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([
@@ -7,9 +6,13 @@ const TodoList = () => {
     { id: 2, text: "Build a Todo App", completed: false },
   ]);
 
-  const addTodo = (text) => {
-    const newTodo = { id: Date.now(), text, completed: false };
-    setTodos([...todos, newTodo]);
+  const [newTodo, setNewTodo] = useState("");
+
+  const addTodo = () => {
+    if (newTodo.trim()) {
+      setTodos([...todos, { id: Date.now(), text: newTodo, completed: false }]);
+      setNewTodo("");
+    }
   };
 
   const toggleTodo = (id) => {
@@ -20,14 +23,22 @@ const TodoList = () => {
     );
   };
 
+  // ✅ FIX: delete handler should remove the todo from state
   const deleteTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
   return (
     <div>
       <h2>Todo List</h2>
-      <AddTodoForm addTodo={addTodo} />
+      <input
+        type="text"
+        placeholder="Add todo"
+        value={newTodo}
+        onChange={(e) => setNewTodo(e.target.value)}
+      />
+      <button onClick={addTodo}>Add</button>
+
       <ul>
         {todos.map((todo) => (
           <li
@@ -38,15 +49,10 @@ const TodoList = () => {
               cursor: "pointer",
             }}
           >
-            {todo.text}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                deleteTodo(todo.id);
-              }}
-            >
-              Delete
-            </button>
+            {todo.text} <button onClick={(e) => {
+              e.stopPropagation(); // prevent toggle when deleting
+              deleteTodo(todo.id);
+            }}>Delete</button>
           </li>
         ))}
       </ul>
