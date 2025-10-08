@@ -1,75 +1,78 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const RegistrationForm = () => {
-  // Step 1: Declare states for each field
+function RegistrationForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
 
-  // Step 2: Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    const newErrors = {};
 
-    // Basic validation
-    if (!username || !email || !password) {
-      setError("All fields are required!");
-      return;
+    if (!username) {
+      newErrors.username = "Username is required";
+    }
+    if (!email) {
+      newErrors.email = "Email is required";
+    }
+    if (!password) {
+      newErrors.password = "Password is required";
     }
 
-    setError("");
-    setMessage("User registered successfully!");
-    console.log({ username, email, password });
+    setErrors(newErrors);
 
-    // Reset form fields
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    // Only log if there are no errors
+    if (Object.keys(newErrors).length === 0) {
+      console.log("Form Submitted:", { username, email, password });
+    }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
-      <h2>Controlled Registration Form</h2>
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded-md">
+      <h2 className="text-xl font-bold mb-4">User Registration</h2>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {message && <p style={{ color: "green" }}>{message}</p>}
+      <div className="mb-3">
+        <label htmlFor="username" className="block font-medium">Username</label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full border p-2 rounded"
+        />
+        {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
+      </div>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter username"
-          />
-        </div>
+      <div className="mb-3">
+        <label htmlFor="email" className="block font-medium">Email</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full border p-2 rounded"
+        />
+        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+      </div>
 
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter email"
-          />
-        </div>
+      <div className="mb-3">
+        <label htmlFor="password" className="block font-medium">Password</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full border p-2 rounded"
+        />
+        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+      </div>
 
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter password"
-          />
-        </div>
-
-        <button type="submit">Register</button>
-      </form>
-    </div>
+      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        Register
+      </button>
+    </form>
   );
-};
+}
 
 export default RegistrationForm;
