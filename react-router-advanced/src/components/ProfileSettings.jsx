@@ -1,7 +1,8 @@
 import React from "react";
 
 const ProfileSettings = () => {
-  return <p>⚙️ Update your account settings here.</p>;
+  return <p>Here you can update your settings.</p>;
 };
 
 export default ProfileSettings;
+

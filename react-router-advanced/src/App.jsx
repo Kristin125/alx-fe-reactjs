@@ -16,7 +16,7 @@ function App() {
 
         {/* Protected and Nested Routes */}
         <Route
-          path="/profile"
+          path="/profile/"
           element={
             <ProtectedRoute>
               <Profile />
