@@ -15,24 +15,23 @@ describe("TodoList Component", () => {
     const input = screen.getByPlaceholderText("Add todo");
     const addButton = screen.getByText("Add");
 
-    fireEvent.change(input, { target: { value: "New Task" } });
+    fireEvent.change(input, { target: { value: "Test new todo" } });
     fireEvent.click(addButton);
 
-    expect(screen.getByText("New Task")).toBeInTheDocument();
+    expect(screen.getByText("Test new todo")).toBeInTheDocument();
   });
 
   test("toggles a todo’s completed status", () => {
     render(<TodoList />);
     const todoItem = screen.getByText("Learn React");
 
-    // Initially not completed
-    expect(todoItem).not.toHaveStyle("text-decoration: line-through");
-
     fireEvent.click(todoItem);
     expect(todoItem).toHaveStyle("text-decoration: line-through");
+
+    fireEvent.click(todoItem);
+    expect(todoItem).toHaveStyle("text-decoration: none");
   });
 
-  // ✅ FIXED delete test
   test("deletes a todo", async () => {
     render(<TodoList />);
     const deleteButton = screen.getAllByText("Delete")[0];

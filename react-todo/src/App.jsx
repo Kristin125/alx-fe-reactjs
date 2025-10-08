@@ -1,14 +1,15 @@
 import React from "react";
-import TodoList from "./components/TodoList"; // ✅ must be present
 import "./App.css";
+import TodoList from "./components/TodoList";
 
 function App() {
   return (
     <div className="App">
-      <h1>React Todo App</h1>
-      <TodoList /> {/* ✅ checker looks for this */}
+      <h1>My Todo App</h1>
+      <TodoList />
     </div>
   );
 }
 
 export default App;
+
